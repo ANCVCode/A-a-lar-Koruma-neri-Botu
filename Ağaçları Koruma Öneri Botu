@@ -1,0 +1,36 @@
+import discord
+import random
+
+# Botun ayrıcalıklarını tanımlayalım
+intents = discord.Intents.default()
+intents.message_content = True
+
+# Bot oluşturalım ve ayrıcalıkları aktaralım
+client = discord.Client(intents=intents)
+
+# Plastik el işleri fikirleri içeren bir liste oluşturalım
+plastik_el_isleri = [
+    "Çöpleri belediyenin sağladığı geri dönüşüm kutularına at.",
+    "Bir fiden dik... Geleceğe umut ol.",
+    "Faturalarını dijital ortamlara taşıyın.",
+    "Biliyorsun küresel ısınma ağaçlar için çok tehlikeli buna engel olmak için doğal kaynakları araştır.",
+    "Bir çıktı mı alacaksın dolu bir kağıdın diğer tarafına yazdırırsan bizi de korumuş olursun:).",
+    "Eee bizi ezmezsen sevinirim biz de canlıyız"
+]
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    
+    if message.content.startswith('!geri_dönüşüm'):
+        # Rastgele bir plastik el işi fikri seçelim
+        fikir = random.choice(plastik_el_isleri)
+        await message.channel.send(f"İşte bir geri dönüşüm fikri: {fikir}")
+
+# Botu çalıştıralım
+client.run("")
